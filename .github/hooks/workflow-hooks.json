@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "java .github/hooks/WorkflowContext.java",
+        "timeout": 10
+      }
+    ]
+  }
+}
