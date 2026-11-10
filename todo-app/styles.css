@@ -1,0 +1,57 @@
+:root {
+  color: #242424;
+  background: #f7f8f8;
+  font-family: system-ui, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+}
+
+#app {
+  width: min(100% - 2rem, 42rem);
+  margin: 4rem auto;
+}
+
+#task-form {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.task-entry {
+  display: flex;
+  gap: 0.5rem;
+}
+
+#task-title {
+  min-width: 0;
+  flex: 1;
+  padding: 0.65rem;
+}
+
+#task-form button {
+  padding: 0.65rem 1rem;
+}
+
+#form-message {
+  min-height: 1.5em;
+  margin: 0;
+  color: #a12622;
+}
+
+#task-list {
+  padding-left: 1.25rem;
+}
+
+#task-list li {
+  overflow-wrap: anywhere;
+  padding-block: 0.35rem;
+}
+
+@media (max-width: 28rem) {
+  .task-entry {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

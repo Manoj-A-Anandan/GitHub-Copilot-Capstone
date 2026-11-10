@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TODO</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="app.js"></script>
+  </head>
+  <body>
+    <main id="app">
+      <h1>TODO</h1>
+      <form id="task-form" aria-label="Add a task">
+        <label for="task-title">Task title</label>
+        <div class="task-entry">
+          <input id="task-title" name="title" type="text" aria-describedby="form-message" aria-invalid="false" autocomplete="off">
+          <button type="submit">Add Task</button>
+        </div>
+        <p id="form-message" role="alert" aria-live="assertive"></p>
+      </form>
+      <ul id="task-list" aria-label="Tasks" aria-live="polite"></ul>
+    </main>
+  </body>
+</html>
