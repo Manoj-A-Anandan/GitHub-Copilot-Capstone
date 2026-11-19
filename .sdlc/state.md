@@ -1,7 +1,7 @@
 # SDLC State
 Story: Create a TODO Task (user-story/_extracted.md; source: user-story-create-todo-task.md)
 Slug: create-todo-task   Branch: feature/create-todo-task
-Current stage: 8 Pull request   Status: IN_PROGRESS
+Current stage: 8 Pull request   Status: WAITING_FOR_HUMAN
 
 ## Stages
 | Stage | Status | Approved at | Commit |
@@ -14,7 +14,7 @@ Current stage: 8 Pull request   Status: IN_PROGRESS
 | 5 Implementation | APPROVED — P0 (T-01–T-03), P1 (T-04–T-19), P2 (T-20–T-21), and P3 (T-22–T-23) | 2026-11-19 14:41 +05:30 | P0: 5039c4e; P1: f464bb3; P2: 673e7f0; P3: 489964e |
 | 6 Code review | APPROVED — CR-1 Low accepted for now | 2026-11-19 14:49 +05:30 | 7a49ca0 |
 | 7 Verify | APPROVED | 2026-11-19 15:22 +05:30 | 6206771 |
-| 8 Pull request | IN_PROGRESS | — | — |
+| 8 Pull request | WAITING_FOR_HUMAN | — | — |
 
 ## Decisions (human answers)
 - [0 Preflight] G0 and branch creation → Approved; create `feature/create-todo-task`.
@@ -90,3 +90,8 @@ Current stage: 8 Pull request   Status: IN_PROGRESS
 - [7 Verification] Verifier ran the gap check, full test suite, coverage, browser acceptance, git diff check, output/document quality checks, and ecosystem audit attempt. `npm test`: 30 passed, 0 failed. Coverage: 96.61% line, 84.21% branch, 90.38% functions. `git diff --check` passed. `npm audit --json` returned ENOLOCK because no lockfile exists; package.json has no dependencies/devDependencies. No failures or production defects found.
 - [7 Verification] Stage-scope docs-sync: in sync; 3 mechanical fixes applied to docs/traceability.md; 3 unresolved accepted semantic conflicts retained (architecture component mappings, undefined NFR-7 testing component, stale architecture §§1/10 statements). No missing traceability links.
 - [7 Verification] Human approved G7; commit only Stage 7 verification report, gap-check test, traceability, and state updates. No amend, `.sdlc/logs/`, push, or PR.
+- [8 Pull request] Human authorized push and PR creation, but no push/PR until G8 approval after final-scope docs-sync.
+- [8 Pull request] PR draft checklist corrected by pr-creator; `Not Found` is now conditional and out of scope rather than a required in-scope test item.
+- [8 Pull request] Implementer clarified tests/README.md to identify `npm test` as the full suite; the verification report records 30 passed, 0 failed.
+- [8 Pull request] Final-scope docs-sync found the three accepted G4 semantic limitations plus an additional unresolved conflict: `.github/instructions/code.instructions.md` mandates literal `Not Found`, contrary to approved create-only requirements/architecture scope. G8 not ready under the instruction's no-unaccepted-unresolved-conflicts rule.
+- [8 Pull request] Final-scope docs-sync: the code instructions now defer to approved missing-data requirements; lookup/`Not Found` behavior is consistently conditional and out of scope. The three accepted G4 limitations remain documented without changing approved architecture. README and CHANGELOG describe partial malformed-record recovery; traceability state is WAITING_FOR_HUMAN. The PR Changes Made inventory covers all 42 pending paths. No unaccepted conflict, missing traceability link, secret, or absolute local path found. G8 remains WAITING_FOR_HUMAN.

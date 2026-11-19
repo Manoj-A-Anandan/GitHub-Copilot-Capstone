@@ -14,7 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Show successfully saved tasks immediately as incomplete and clear the input.
 - Save tasks in browser `localStorage` and restore them after a page refresh.
 - Provide reread and explicitly confirmed replacement controls for unreadable
-  saved data, and render task titles as text.
+  saved data, retain valid distinct records when malformed entries are skipped,
+  and render task titles as text.
 
 ### Changed
 

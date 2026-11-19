@@ -36,8 +36,9 @@ confirmation; confirming releases the write block, and a later successful task
 save can replace the unreadable data. **Replace saved tasks** is available only
 while the app is blocked after an unreadable initial load; it is hidden and
 disabled when data is readable, after a successful reread, or after confirmed
-replacement. A failed save leaves the task list and input unchanged and
-displays an error.
+replacement. For a readable array containing malformed records, valid distinct
+tasks are retained and the app reports that malformed saved tasks were skipped.
+A failed save leaves the task list and input unchanged and displays an error.
 
 Storage is browser- and origin-specific. Clearing site data, changing browser
 or origin, or browser privacy, quota, or policy restrictions may make saved
@@ -67,8 +68,8 @@ The browser acceptance test requires an installed Chrome or Edge browser.
   recovery code.
 - `tests/` — unit, integration, storage fault, security, and browser acceptance
   tests.
-- `docs/` — approved requirements and architecture, implementation plan, design
-  review, and traceability documentation.
+- `docs/` — requirements, architecture, design review, implementation plan,
+  code review, verification report, PR draft, and traceability.
 - `package.json` — Node version requirement and test command.
 - `.env.example` — application environment-variable note.
 
