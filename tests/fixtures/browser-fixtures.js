@@ -32,6 +32,7 @@ export function createDomFixture() {
     for (const id of DEFAULT_DOM_IDS) {
       const element = new FixtureElement(id === "title" ? "input" : "div");
       element.id = id;
+      element.ownerDocument = document;
       elements.set(id, element);
     }
   }

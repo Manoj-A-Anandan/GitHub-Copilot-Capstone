@@ -10,6 +10,17 @@
   <body>
     <main id="app" aria-labelledby="page-title">
       <h1 id="page-title">TODO</h1>
+      <form id="task-form">
+        <label for="title">Task title</label>
+        <input id="title" name="title" type="text" autocomplete="off">
+        <button id="add-task" type="submit">Add Task</button>
+      </form>
+      <p id="feedback" role="status" aria-live="polite"></p>
+      <div id="recovery-controls">
+        <button id="reread-tasks" type="button">Reread saved tasks</button>
+        <button id="replace-tasks" type="button">Replace saved tasks</button>
+      </div>
+      <ul id="task-list" aria-label="Tasks"></ul>
     </main>
   </body>
 </html>

@@ -1,7 +1,7 @@
 # SDLC State
 Story: Create a TODO Task (user-story/_extracted.md; source: user-story-create-todo-task.md)
 Slug: create-todo-task   Branch: feature/create-todo-task
-Current stage: 5 Implementation (P1)   Status: IN_PROGRESS
+Current stage: 5 Implementation (P2)   Status: IN_PROGRESS
 
 ## Stages
 | Stage | Status | Approved at | Commit |
@@ -11,7 +11,7 @@ Current stage: 5 Implementation (P1)   Status: IN_PROGRESS
 | 2 Architecture | APPROVED — Version 3 revision | 2026-11-19 12:31 +05:30 | 58630ef |
 | 3 Design review | APPROVED — Round 2 | 2026-11-19 12:31 +05:30 | 58630ef |
 | 4 Implementation planning | APPROVED | 2026-11-19 13:22 +05:30 | e1ffd4e |
-| 5 Implementation | APPROVED — P0 (T-01–T-03) | 2026-11-19 13:42 +05:30 | pending |
+| 5 Implementation | APPROVED — P0 (T-01–T-03) and P1 (T-04–T-19); IN_PROGRESS — P2 (T-20–T-21) | 2026-11-19 13:42 +05:30 | P0: 5039c4e; P1 commit ID pending |
 | 6 Code review | NOT_STARTED | — | — |
 | 7 Verify | NOT_STARTED | — | — |
 | 8 Pull request | NOT_STARTED | — | — |
@@ -36,7 +36,11 @@ Current stage: 5 Implementation (P1)   Status: IN_PROGRESS
 - [4 Implementation planning] G4 → Approved by human despite the unresolved documentation risks; approve plan/traceability files only.
 - [4 Implementation planning] Accepted risk → Architecture §4 and §12 requirement-component mappings differ, and NFR-7's §12 “Testing Strategy” component is not defined in §§3–4. Preserve and report these semantic conflicts; for implementation coverage use §12 and `docs/traceability.md`, without changing the conflicting mapping definitions.
 - [5 Implementation P0] T-01/T-02/T-03 completed in dependency order; only P0 tests run (`npm test`: 7 passed, 0 failed); G5 awaits human approval.
-- [5 Implementation P0] G5 P0 approved by human; commit P0 artifacts before starting P1.
+- [5 Implementation P0] G5 P0 approved by human; committed specific P0 artifacts as `5039c4e` with required co-author trailer.
+- [5 Implementation P1] T-04–T-19 completed in dependency order; P1-only Node test run passed (13 tests, 0 failures); G5 P1 awaits human approval.
+- [5 Implementation P1] Human requested a narrow P1 correction for a throwing `window.localStorage` getter before G5; preserve injection, route getter failure through adapter unreadable handling, show the exact approved message, block writes, and add a focused regression test. Do not start P2 or change accepted architecture mapping risks.
+- [5 Implementation P1] Correction completed; full P1 suite rerun passed (14 tests, 0 failures); G5 P1 awaits human approval. No commit.
+- [5 Implementation P1] Human approved G5 P1 and directed continuation through planned priority groups; commit P1 T-04–T-19 before starting P2, then retain the G5 approval gate after P2 and stop before P3.
 
 ## Assumptions accepted
 - [4 Implementation planning] Human accepted the unresolved architecture semantic-mapping risks (FR-3, FR-4, FR-7, FR-8, NFR-1, NFR-6 discrepancies between §§4 and 12; NFR-7 “Testing Strategy” not defined as a component in §§3–4). Implement using approved coverage in §12 / `docs/traceability.md`; do not reconcile the upstream mappings silently.
@@ -58,4 +62,9 @@ Current stage: 5 Implementation (P1)   Status: IN_PROGRESS
 - [4 Implementation planning] Final stage-scope docs-sync: 2 unresolved semantic conflicts retained (architecture §4/§12 component mappings; NFR-7 “Testing Strategy” component definition); approval markers synced. Plan and traceability committed only as `e1ffd4e` with required co-author trailer.
 - [5 Implementation P0] Stage-scope docs-sync: 1 fix applied; 3 unresolved semantic conflicts (accepted §4/§12 mappings, undefined NFR-7 “Testing Strategy” component, and architecture §§1/10 pre-implementation statements now stale). Traceability records P0 coverage only; P1+ source paths remain Not Found.
 - [5 Implementation P0] Final stage-scope docs-sync: updated traceability state to WAITING_FOR_HUMAN; 1 fix applied, same 3 semantic conflicts remain, no blocking open questions.
-- [5 Implementation P0] G5 approved; P0 commit pending.
+- [5 Implementation P0] G5 approved and committed as `5039c4e`; P1 implementation in progress.
+- [5 Implementation P1] P1 test run: `node --test tests/title-validator.test.js tests/task-state.test.js tests/storage-adapter.test.js tests/storage-recovery.test.js tests/task-creation-controller.test.js tests/safe-renderer.test.js tests/task-page.test.js tests/integrated-flow.test.js` — 13 passed, 0 failed.
+- [5 Implementation P1] Stage-scope docs-sync updated P1 traceability links/statuses and test evidence; unresolved semantic conflicts retained (accepted §4/§12 mappings, undefined NFR-7 “Testing Strategy,” and stale architecture §§1/10 statements).
+- [5 Implementation P1 correction] Full P1 test rerun with throwing-getter regression: `node --test tests/title-validator.test.js tests/task-state.test.js tests/storage-adapter.test.js tests/storage-recovery.test.js tests/task-creation-controller.test.js tests/safe-renderer.test.js tests/task-page.test.js tests/integrated-flow.test.js` — 14 passed, 0 failed; `git diff --check` passed.
+- [5 Implementation P1 correction] Stage-scope docs-sync: 4 fixes applied; 3 accepted semantic conflicts retained; no blocking questions. Updated traceability records the added regression and 14-test result.
+- [5 Implementation P1] Human approved G5 P1; P1 commit in progress.
