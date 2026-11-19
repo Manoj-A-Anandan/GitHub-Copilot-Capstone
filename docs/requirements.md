@@ -1,6 +1,6 @@
 # Requirements — Create a TODO Task
 
-Source: user-story/_extracted.md (source: user-story-create-todo-task.md)   Version: 3   Status: Draft
+Source: user-story/_extracted.md (source: user-story-create-todo-task.md)   Version: 3   Status: Approved
 
 ## 1. User Story
 

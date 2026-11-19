@@ -1,17 +1,17 @@
 # SDLC State
 Story: Create a TODO Task (user-story/_extracted.md; source: user-story-create-todo-task.md)
 Slug: create-todo-task   Branch: feature/create-todo-task
-Current stage: 3 Design review   Status: IN_PROGRESS
+Current stage: 5 Implementation (P1)   Status: IN_PROGRESS
 
 ## Stages
 | Stage | Status | Approved at | Commit |
 |-------|--------|-------------|--------|
 | 0 Preflight | APPROVED | 2026-11-19 11:48 +05:30 | cf910fe |
-| 1 Requirements | APPROVED | 2026-11-19 11:53 +05:30 | 94927b8 |
-| 2 Architecture | APPROVED | 2026-11-19 12:02 +05:30 | pending |
-| 3 Design review | IN_PROGRESS | — | — |
-| 4 Implementation planning | NOT_STARTED | — | — |
-| 5 Implementation | NOT_STARTED | — | — |
+| 1 Requirements | APPROVED — Version 3 revision | 2026-11-19 12:15 +05:30 | 93aadb2 |
+| 2 Architecture | APPROVED — Version 3 revision | 2026-11-19 12:31 +05:30 | 58630ef |
+| 3 Design review | APPROVED — Round 2 | 2026-11-19 12:31 +05:30 | 58630ef |
+| 4 Implementation planning | APPROVED | 2026-11-19 13:22 +05:30 | e1ffd4e |
+| 5 Implementation | APPROVED — P0 (T-01–T-03) | 2026-11-19 13:42 +05:30 | pending |
 | 6 Code review | NOT_STARTED | — | — |
 | 7 Verify | NOT_STARTED | — | — |
 | 8 Pull request | NOT_STARTED | — | — |
@@ -25,11 +25,37 @@ Current stage: 3 Design review   Status: IN_PROGRESS
 - [2 Architecture] The 255-character maximum counts Unicode code points.
 - [2 Architecture] Storage recovery → Load zero tasks when data is unreadable; preserve valid distinct records in partially malformed arrays; fail writes atomically; show a clear storage error.
 - [2 Architecture] G2 → Approved.
+- [3 Design review / DR-1] After an unreadable initial storage load, block task writes until a successful read or explicit user-confirmed replacement.
+- [3 Design review / DR-2] No lookup feature is in scope now; `Not Found` behavior is conditional only if lookup is introduced later.
+- [3 Design review / DR-3] Reopen the previously approved requirements artifact to record the design-review decisions and make `Not Found` conditional; request G1 approval before revising architecture or rerunning design review.
+- [1 Requirements revision] Overlength title validation message → `Task title must be 255 characters or fewer.` Titles count Unicode code points.
+- [1 Requirements revision] Unreadable initial-load storage message → `Saved tasks could not be read. Resolve the issue or confirm replacing saved tasks before adding a task.`
+- [1 Requirements revision] Failed-save storage message → `Unable to save the task. Please try again.`
+- [1 Requirements revision] G1 Version 3 approval → Approved; commit `93aadb2`.
+- [3 Design review] G3 Round 2 approval → Approved; commit architecture v3, Round 2 review, and traceability as `58630ef` with required co-author trailer.
+- [4 Implementation planning] G4 → Approved by human despite the unresolved documentation risks; approve plan/traceability files only.
+- [4 Implementation planning] Accepted risk → Architecture §4 and §12 requirement-component mappings differ, and NFR-7's §12 “Testing Strategy” component is not defined in §§3–4. Preserve and report these semantic conflicts; for implementation coverage use §12 and `docs/traceability.md`, without changing the conflicting mapping definitions.
+- [5 Implementation P0] T-01/T-02/T-03 completed in dependency order; only P0 tests run (`npm test`: 7 passed, 0 failed); G5 awaits human approval.
+- [5 Implementation P0] G5 P0 approved by human; commit P0 artifacts before starting P1.
 
 ## Assumptions accepted
-- None.
+- [4 Implementation planning] Human accepted the unresolved architecture semantic-mapping risks (FR-3, FR-4, FR-7, FR-8, NFR-1, NFR-6 discrepancies between §§4 and 12; NFR-7 “Testing Strategy” not defined as a component in §§3–4). Implement using approved coverage in §12 / `docs/traceability.md`; do not reconcile the upstream mappings silently.
 
 ## Docs-sync log
 - [0 Preflight] in sync — 0 fixes applied.
 - [1 Requirements] 1 fix applied; 5 unresolved; traceability links not yet available for downstream stages.
 - [2 Architecture] 1 fix applied; 1 unresolved semantic conflict — requirements §6/§8 still say the validation text, title limit, and storage recovery are unspecified, despite the clarifications recorded above.
+- [1 Requirements reopened] Revision requested by human; awaiting requirements-analyst update and stage-scope docs-sync before G1.
+- [1 Requirements revision] BLOCKED: requirements-analyst revision attempts returned no write capability; docs/requirements.md remains at Version 2 and revised artifact is not available for G1.
+- [1 Requirements revision] Revised artifact Version 3 is present; partial Version 2 changes preserved, exact answers recorded, and Open Items cleared.
+- [1 Requirements revision] 1 fix applied; 4 semantic conflicts remain for downstream owners: DR-1 write gate; exact overlength message; exact storage messages; DR-2 status in design review. Traceability rebuilt; G1 awaiting human approval.
+- [1 Requirements revision] G1 approved; `docs/requirements.md` and `docs/traceability.md` committed as `93aadb2`; architecture follow-up required before Round 2.
+- [2 Architecture follow-up] 1 mechanical fix applied; no semantic conflicts. Architecture v3 is based on requirements v3 and addresses DR-1/DR-2; traceability refreshed.
+- [3 Design review / Round 2] DR-1, DR-2, and DR-3 resolved; no new findings; verdict Approve. Stage 3 docs-sync: Status: in sync | 1 fixes applied | 0 unresolved. Rebuilt docs/traceability.md; plan/code/tests remain Not Found.
+- [3 Design review] G3 approved by human; artifacts committed as `58630ef`.
+- [4 Implementation planning] Stage-scope docs-sync: 1 fix applied; 3 unresolved semantic conflicts (architecture §4/§12 component mapping, NFR-7 component definition, and v3 Draft labels vs. approved state). All 23 plan task mappings, 18 FR/NFR coverages, planned test links, and 32 dependency edges verified; no cycles.
+- [4 Implementation planning] G4 approved by human; requirements/architecture v3 status markers changed to Approved without altering approved content. Accepted semantic mapping risks recorded above; using §12 / traceability mappings for implementation.
+- [4 Implementation planning] Final stage-scope docs-sync: 2 unresolved semantic conflicts retained (architecture §4/§12 component mappings; NFR-7 “Testing Strategy” component definition); approval markers synced. Plan and traceability committed only as `e1ffd4e` with required co-author trailer.
+- [5 Implementation P0] Stage-scope docs-sync: 1 fix applied; 3 unresolved semantic conflicts (accepted §4/§12 mappings, undefined NFR-7 “Testing Strategy” component, and architecture §§1/10 pre-implementation statements now stale). Traceability records P0 coverage only; P1+ source paths remain Not Found.
+- [5 Implementation P0] Final stage-scope docs-sync: updated traceability state to WAITING_FOR_HUMAN; 1 fix applied, same 3 semantic conflicts remain, no blocking open questions.
+- [5 Implementation P0] G5 approved; P0 commit pending.
