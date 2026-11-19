@@ -25,6 +25,12 @@ export function initializeApp(documentRef = document, storageRef) {
   const adapter = new LocalStorageAdapter(resolveStorage(storageRef));
   const state = new InMemoryTaskState();
   const recovery = new StorageRecoveryState();
+  const updateReplacementAvailability = () => {
+    if (!replace) return;
+    const available = recovery.isBlocked();
+    replace.hidden = !available;
+    replace.disabled = !available;
+  };
   const initial = adapter.read();
   if (initial.kind === "unreadable") {
     recovery.enterUnreadableInitialLoad();
@@ -37,6 +43,7 @@ export function initializeApp(documentRef = document, storageRef) {
       ? "Some malformed saved tasks were skipped."
       : "";
   }
+  updateReplacementAvailability();
   renderTaskList(list, state.snapshotCopy());
 
   const controller = new TaskCreationController({
@@ -64,9 +71,11 @@ export function initializeApp(documentRef = document, storageRef) {
     feedback.textContent = rereadResult.result.skipped
       ? "Some malformed saved tasks were skipped."
       : "";
+    updateReplacementAvailability();
   });
 
   replace?.addEventListener("click", () => {
+    if (!recovery.isBlocked()) return;
     const confirmed = typeof window.confirm === "function"
       ? window.confirm("Replace unreadable saved tasks? This can discard them.")
       : false;
@@ -75,6 +84,7 @@ export function initializeApp(documentRef = document, storageRef) {
     state.commit([]);
     renderTaskList(list, state.snapshotCopy());
     feedback.textContent = "";
+    updateReplacementAvailability();
   });
 
   return { state, recovery, adapter, controller };

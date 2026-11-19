@@ -103,6 +103,36 @@ test("T-20 malformed arrays retain valid distinct records and skip malformed and
   assert.equal(elements.get("feedback").textContent, "Some malformed saved tasks were skipped.");
 });
 
+test("Replace saved tasks is unavailable and cannot clear readable saved tasks", () => {
+  const savedValue =
+    '[{"id":"saved","title":"Keep saved task","status":"incomplete"}]';
+  const fixture = createStorageFixture({ value: savedValue });
+  const { app, elements } = createApp(fixture);
+  const replace = elements.get("replace-tasks");
+
+  assert.equal(app.recovery.isBlocked(), false);
+  assert.equal(replace.hidden, true);
+  assert.equal(replace.disabled, true);
+
+  let confirmationCalls = 0;
+  withWindow({
+    confirm() {
+      confirmationCalls += 1;
+      return true;
+    },
+  }, () => {
+    replace.dispatchEvent({ type: "click" });
+  });
+
+  assert.equal(confirmationCalls, 0);
+  assert.deepEqual(taskTitles(elements), ["Keep saved task"]);
+  assert.deepEqual(app.state.snapshotCopy(), [
+    { id: "saved", title: "Keep saved task", status: "incomplete" },
+  ]);
+  assert.equal(fixture.storage.getItem("tasks"), savedValue);
+  assert.equal(fixture.observations.setItemCalls.length, 0);
+});
+
 test("T-20 blocked submission makes no write; successful reread releases the gate", () => {
   const fixture = createStorageFixture({
     value: null,
@@ -110,6 +140,9 @@ test("T-20 blocked submission makes no write; successful reread releases the gat
   });
   const { app, elements } = createApp(fixture);
   assert.equal(app.recovery.isBlocked(), true);
+  const replace = elements.get("replace-tasks");
+  assert.equal(replace.hidden, false);
+  assert.equal(replace.disabled, false);
 
   submit(elements, "Blocked attempt");
   assert.equal(fixture.observations.setItemCalls.length, 0);
@@ -123,6 +156,8 @@ test("T-20 blocked submission makes no write; successful reread releases the gat
     elements.get("reread-tasks").dispatchEvent({ type: "click" });
   });
   assert.equal(app.recovery.isBlocked(), false);
+  assert.equal(replace.hidden, true);
+  assert.equal(replace.disabled, true);
   assert.deepEqual(taskTitles(elements), ["Recovered task"]);
   assert.equal(elements.get("feedback").textContent, "");
 
@@ -137,6 +172,9 @@ test("T-20 explicit replacement releases writes and a failed write remains atomi
   const fixture = createStorageFixture({ value: originalValue });
   const { app, elements } = createApp(fixture);
   assert.equal(app.recovery.isBlocked(), true);
+  const replace = elements.get("replace-tasks");
+  assert.equal(replace.hidden, false);
+  assert.equal(replace.disabled, false);
 
   withWindow({ confirm: () => true }, () => {
     assert.doesNotThrow(() => {
@@ -144,6 +182,8 @@ test("T-20 explicit replacement releases writes and a failed write remains atomi
     });
   });
   assert.equal(app.recovery.isBlocked(), false);
+  assert.equal(replace.hidden, true);
+  assert.equal(replace.disabled, true);
   assert.equal(elements.get("feedback").textContent, "");
   assert.equal(elements.get("task-list").children.length, 0);
 

@@ -1,7 +1,7 @@
 # SDLC State
 Story: Create a TODO Task (user-story/_extracted.md; source: user-story-create-todo-task.md)
 Slug: create-todo-task   Branch: feature/create-todo-task
-Current stage: 5 Implementation (P3)   Status: IN_PROGRESS
+Current stage: 5 Implementation (P3)   Status: APPROVED
 
 ## Stages
 | Stage | Status | Approved at | Commit |
@@ -11,7 +11,7 @@ Current stage: 5 Implementation (P3)   Status: IN_PROGRESS
 | 2 Architecture | APPROVED — Version 3 revision | 2026-11-19 12:31 +05:30 | 58630ef |
 | 3 Design review | APPROVED — Round 2 | 2026-11-19 12:31 +05:30 | 58630ef |
 | 4 Implementation planning | APPROVED | 2026-11-19 13:22 +05:30 | e1ffd4e |
-| 5 Implementation | APPROVED — P0 (T-01–T-03), P1 (T-04–T-19), and P2 (T-20–T-21); IN_PROGRESS — P3 (T-22–T-23) | 2026-11-19 14:20 +05:30 | P0: 5039c4e; P1: f464bb3; P2: pending |
+| 5 Implementation | APPROVED — P0 (T-01–T-03), P1 (T-04–T-19), P2 (T-20–T-21), and P3 (T-22–T-23) | 2026-11-19 14:41 +05:30 | P0: 5039c4e; P1: f464bb3; P2: 673e7f0; P3: pending |
 | 6 Code review | NOT_STARTED | — | — |
 | 7 Verify | NOT_STARTED | — | — |
 | 8 Pull request | NOT_STARTED | — | — |
@@ -43,6 +43,11 @@ Current stage: 5 Implementation (P3)   Status: IN_PROGRESS
 - [5 Implementation P1] Human approved G5 P1 and directed continuation through planned priority groups; commit P1 T-04–T-19 before starting P2, then retain the G5 approval gate after P2 and stop before P3.
 - [5 Implementation P1] G5 P1 approval recorded and implementation/tests committed as `f464bb3` (`feat(todo): implement task creation flow`); required Copilot co-author trailer included.
 - [5 Implementation P2] Human approved G5 P2 and directed completion of P3 T-22/T-23, retaining the G5 P3 gate before code review. Commit only the P2 tests and necessary plan/traceability/state updates; no amend, no `.sdlc/logs/`, no push or PR.
+- [5 Implementation P3] Docs-sync authored README and CHANGELOG. Clarification pending on whether the currently always-visible replacement action should be limited to blocked recovery; no behavior changes made.
+- [5 Implementation P3] Human clarification: the Replace saved tasks control must be available only while blocked after an unreadable initial load.
+- [5 Implementation P3] Implementer revision: Replace saved tasks is hidden/disabled except while blocked after an unreadable initial load; handler is guarded against clearing readable in-memory tasks; success via reread or confirmed replacement disables it. Regression tests cover readable data and blocked recovery. Preserve confirmation flow and exact feedback.
+- [5 Implementation P3] T-22/T-23 marked Done by implementer after README, CHANGELOG, and traceability documentation existed. No commit made; G5 P3 is pending.
+- [5 Implementation P3] Human approved G5 P3 and directed committing only README, CHANGELOG, the recovery-control fix and focused P2 tests, implementation plan, traceability, and state. No amend, no `.sdlc/logs/`, no push or PR.
 
 ## Assumptions accepted
 - [4 Implementation planning] Human accepted the unresolved architecture semantic-mapping risks (FR-3, FR-4, FR-7, FR-8, NFR-1, NFR-6 discrepancies between §§4 and 12; NFR-7 “Testing Strategy” not defined as a component in §§3–4). Implement using approved coverage in §12 / `docs/traceability.md`; do not reconcile the upstream mappings silently.
@@ -72,4 +77,8 @@ Current stage: 5 Implementation (P3)   Status: IN_PROGRESS
 - [5 Implementation P1] Human approved G5 P1; P1 commit in progress.
 - [5 Implementation P2] Tests: `node --test --test-timeout=20000 tests/p2-storage-fault-matrix.test.js tests/p2-browser-acceptance.test.js` — 5 passed, 0 failed; real-browser acceptance ran in installed Microsoft Edge. Full `npm test` — 26 passed, 0 failed; `git diff --check` passed.
 - [5 Implementation P2] Stage-scope docs-sync: 1 fix applied; 3 accepted semantic conflicts retained; no blocking questions. P2 traceability updated for T-20/T-21 and test results.
-- [5 Implementation P2] Human approved G5; P2 commit in progress.
+- [5 Implementation P2] Human approved G5; committed only P2 tests and necessary plan/traceability/state updates as `673e7f0` (`test(todo): add P2 storage and browser acceptance coverage`) with the required co-author trailer. `.sdlc/logs/` excluded; no amend.
+- [5 Implementation P3] README/CHANGELOG authored; `npm test` passed (26 tests), README local links resolved, and `python -m http.server 8000 --directory src` served the HTML and JS module in validation. Awaiting human clarification on the replacement-control risk before proceeding.
+- [5 Implementation P3] Initial stage-scope docs-sync: 3 fixes applied (README warning, CHANGELOG entry, traceability); 3 accepted semantic conflicts retained. Final stage-scope docs-sync after T-22/T-23 statuses: 1 traceability fix; same 3 semantic conflicts retained; no Not Found or open questions.
+- [5 Implementation P3] Final verification: `npm test` — 27 passed, 0 failed (Microsoft Edge browser acceptance included); `git diff --check` passed. README launch command `python -m http.server 8000 --directory src` served `/` and `/app.js` (200, `text/javascript`); Node v24.22.0 used. No code/doc commit pending G5 approval.
+- [5 Implementation P3] Human approved G5 P3; preparing the scoped conventional commit. `.sdlc/logs/` excluded.

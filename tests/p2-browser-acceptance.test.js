@@ -202,7 +202,14 @@ async function enterAndSubmit(connection, sessionId, title) {
   }))()`);
 }
 
-async function assertViewportControls(connection, sessionId, width, height, mobile) {
+async function assertViewportControls(
+  connection,
+  sessionId,
+  width,
+  height,
+  mobile,
+  replacementAvailable = false,
+) {
   await connection.send("Emulation.setDeviceMetricsOverride", {
     width,
     height,
@@ -210,7 +217,7 @@ async function assertViewportControls(connection, sessionId, width, height, mobi
     mobile,
   }, sessionId);
   const result = await evaluate(connection, sessionId, `(() => {
-    const selectors = ["#title", "#add-task", "#reread-tasks", "#replace-tasks"];
+    const selectors = ["#title", "#add-task", "#reread-tasks"];
     const controls = selectors.map((selector) => {
       const element = document.querySelector(selector);
       const rect = element.getBoundingClientRect();
@@ -223,7 +230,20 @@ async function assertViewportControls(connection, sessionId, width, height, mobi
         operable: !element.disabled,
       };
     });
-    return { width: innerWidth, scrollWidth: document.documentElement.scrollWidth, controls };
+    const replacement = document.querySelector("#replace-tasks");
+    const replacementStyle = getComputedStyle(replacement);
+    const replacementRect = replacement.getBoundingClientRect();
+    return {
+      width: innerWidth,
+      scrollWidth: document.documentElement.scrollWidth,
+      controls,
+      replacement: {
+        visible: replacementStyle.display !== "none" &&
+          replacementStyle.visibility !== "hidden" &&
+          replacementRect.width > 0 && replacementRect.height > 0,
+        operable: !replacement.disabled,
+      },
+    };
   })()`);
   assert.equal(result.width, width);
   assert.ok(result.scrollWidth <= width, `No horizontal overflow at ${width}px`);
@@ -231,6 +251,10 @@ async function assertViewportControls(connection, sessionId, width, height, mobi
     assert.ok(control.visible, `${control.selector} is visible at ${width}px`);
     assert.ok(control.operable, `${control.selector} is enabled at ${width}px`);
   }
+  assert.equal(result.replacement.visible, replacementAvailable,
+    `Replace saved tasks visibility matches recovery state at ${width}px`);
+  assert.equal(result.replacement.operable, replacementAvailable,
+    `Replace saved tasks availability matches recovery state at ${width}px`);
 }
 
 async function stopBrowser(browser, browserConnection) {
@@ -252,8 +276,6 @@ async function stopBrowser(browser, browserConnection) {
 
 async function exerciseRecoveryControls(connection, sessionId) {
   await clickSelector(connection, sessionId, "#reread-tasks");
-  await evaluate(connection, sessionId, "window.confirm = () => false");
-  await clickSelector(connection, sessionId, "#replace-tasks");
 }
 
 test("T-21 real-browser security, responsive controls, and isolated-origin refresh", async (t) => {
@@ -362,6 +384,42 @@ test("T-21 real-browser security, responsive controls, and isolated-origin refre
     })));
     assert.deepEqual(restored.stored.map((task) => task.title), savedTitles);
     assert.ok(restored.stored.every((task) => task.status === "incomplete"));
+
+    await evaluate(connection, undefined, `localStorage.setItem("tasks", "{ unreadable")`);
+    const blockedLoad = connection.waitForEvent("Page.loadEventFired");
+    await connection.send("Page.reload", { ignoreCache: true });
+    await blockedLoad;
+    await assertViewportControls(connection, undefined, 320, 800, true, true);
+    const blockedFeedback = await evaluate(
+      connection,
+      undefined,
+      `document.querySelector("#feedback").textContent`,
+    );
+    assert.equal(
+      blockedFeedback,
+      "Saved tasks could not be read. Resolve the issue or confirm replacing saved tasks before adding a task.",
+    );
+    await clickSelector(connection, undefined, "#reread-tasks");
+    await evaluate(connection, undefined, `window.confirm = (message) => {
+      window.__replaceConfirmation = message;
+      return true;
+    }`);
+    await clickSelector(connection, undefined, "#replace-tasks");
+    const replacementResult = await evaluate(connection, undefined, `({
+      confirmation: window.__replaceConfirmation,
+      hidden: document.querySelector("#replace-tasks").hidden,
+      disabled: document.querySelector("#replace-tasks").disabled,
+      feedback: document.querySelector("#feedback").textContent,
+      taskCount: document.querySelectorAll("#task-list li").length
+    })`);
+    assert.equal(
+      replacementResult.confirmation,
+      "Replace unreadable saved tasks? This can discard them.",
+    );
+    assert.equal(replacementResult.hidden, true);
+    assert.equal(replacementResult.disabled, true);
+    assert.equal(replacementResult.feedback, "");
+    assert.equal(replacementResult.taskCount, 0);
     t.diagnostic(`Browser acceptance ran with ${path.basename(browserPath)}.`);
   } finally {
     await stopBrowser(browser, browserConnection);
