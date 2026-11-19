@@ -4,9 +4,9 @@ Source of truth: [approved requirements](requirements.md) v3. Architecture compo
 names below follow [architecture §12](architecture.md#12-requirement-coverage);
 task coverage follows [implementation plan §7](impl-plan.md#7-requirement--task-coverage).
 The plan records T-01–T-23 as Done. Verification is recorded as PASS in
-[verification-report.md](verification-report.md). The repository is at Stage 8,
-Pull request, WAITING_FOR_HUMAN ([state](../.sdlc/state.md)); this matrix does
-not change that gate.
+[verification-report.md](verification-report.md). Stage 8 is complete
+([state](../.sdlc/state.md)); PR #1 is
+[open](https://github.com/Manoj-A-Anandan/GitHub-Copilot-Capstone/pull/1).
 
 | Requirement | Architecture component(s) | Plan task(s) | Code file(s) | Test(s) | Status |
 |---|---|---|---|---|---|

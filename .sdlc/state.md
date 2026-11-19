@@ -1,7 +1,7 @@
 # SDLC State
 Story: Create a TODO Task (user-story/_extracted.md; source: user-story-create-todo-task.md)
 Slug: create-todo-task   Branch: feature/create-todo-task
-Current stage: 8 Pull request   Status: WAITING_FOR_HUMAN
+Current stage: 8 Pull request   Status: COMPLETE
 
 ## Stages
 | Stage | Status | Approved at | Commit |
@@ -14,7 +14,7 @@ Current stage: 8 Pull request   Status: WAITING_FOR_HUMAN
 | 5 Implementation | APPROVED — P0 (T-01–T-03), P1 (T-04–T-19), P2 (T-20–T-21), and P3 (T-22–T-23) | 2026-11-19 14:41 +05:30 | P0: 5039c4e; P1: f464bb3; P2: 673e7f0; P3: 489964e |
 | 6 Code review | APPROVED — CR-1 Low accepted for now | 2026-11-19 14:49 +05:30 | 7a49ca0 |
 | 7 Verify | APPROVED | 2026-11-19 15:22 +05:30 | 6206771 |
-| 8 Pull request | WAITING_FOR_HUMAN | — | — |
+| 8 Pull request | APPROVED | 2026-11-19 18:09 +05:30 | 685a4fb |
 
 ## Decisions (human answers)
 - [0 Preflight] G0 and branch creation → Approved; create `feature/create-todo-task`.
@@ -51,6 +51,7 @@ Current stage: 8 Pull request   Status: WAITING_FOR_HUMAN
 - [5 Implementation P3] Committed approved P3 deliverables and focused recovery-control fix/tests as `489964e` (`feat(todo): document task app and restrict recovery control`) with the required Copilot co-author trailer; `.sdlc/logs/` excluded.
 - [6 Code review] Code reviewer returned Approve with notes; no Blocker/High findings, one Low finding CR-1 remains open. `npm audit` could not assess dependencies because no lockfile exists and package.json declares none. G6 awaits human decision; stop before Stage 7.
 - [6 Code review] Human approved G6, accepting Low finding CR-1 for now; commit only `docs/code-review.md`, Stage 6 traceability, and state updates. No amend, `.sdlc/logs/`, or unrelated changes.
+- [8 Pull request] G8 → Approved; push `feature/create-todo-task` and create PR #1 at https://github.com/Manoj-A-Anandan/GitHub-Copilot-Capstone/pull/1.
 
 ## Assumptions accepted
 - [4 Implementation planning] Human accepted the unresolved architecture semantic-mapping risks (FR-3, FR-4, FR-7, FR-8, NFR-1, NFR-6 discrepancies between §§4 and 12; NFR-7 “Testing Strategy” not defined as a component in §§3–4). Implement using approved coverage in §12 / `docs/traceability.md`; do not reconcile the upstream mappings silently.
@@ -95,3 +96,4 @@ Current stage: 8 Pull request   Status: WAITING_FOR_HUMAN
 - [8 Pull request] Implementer clarified tests/README.md to identify `npm test` as the full suite; the verification report records 30 passed, 0 failed.
 - [8 Pull request] Final-scope docs-sync found the three accepted G4 semantic limitations plus an additional unresolved conflict: `.github/instructions/code.instructions.md` mandates literal `Not Found`, contrary to approved create-only requirements/architecture scope. G8 not ready under the instruction's no-unaccepted-unresolved-conflicts rule.
 - [8 Pull request] Final-scope docs-sync: the code instructions now defer to approved missing-data requirements; lookup/`Not Found` behavior is consistently conditional and out of scope. The three accepted G4 limitations remain documented without changing approved architecture. README and CHANGELOG describe partial malformed-record recovery; traceability state is WAITING_FOR_HUMAN. The PR Changes Made inventory covers all 42 pending paths. No unaccepted conflict, missing traceability link, secret, or absolute local path found. G8 remains WAITING_FOR_HUMAN.
+- [8 Pull request] G8 approved; commit `685a4fb` pushed to `origin/feature/create-todo-task`; PR #1 created. Stage 8 is complete.
