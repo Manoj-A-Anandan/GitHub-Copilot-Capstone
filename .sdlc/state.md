@@ -1,7 +1,7 @@
 # SDLC State
 Story: Create a TODO Task (user-story/_extracted.md; source: user-story-create-todo-task.md)
 Slug: create-todo-task   Branch: feature/create-todo-task
-Current stage: 5 Implementation (P3)   Status: APPROVED
+Current stage: 7 Verify   Status: IN_PROGRESS
 
 ## Stages
 | Stage | Status | Approved at | Commit |
@@ -11,9 +11,9 @@ Current stage: 5 Implementation (P3)   Status: APPROVED
 | 2 Architecture | APPROVED — Version 3 revision | 2026-11-19 12:31 +05:30 | 58630ef |
 | 3 Design review | APPROVED — Round 2 | 2026-11-19 12:31 +05:30 | 58630ef |
 | 4 Implementation planning | APPROVED | 2026-11-19 13:22 +05:30 | e1ffd4e |
-| 5 Implementation | APPROVED — P0 (T-01–T-03), P1 (T-04–T-19), P2 (T-20–T-21), and P3 (T-22–T-23) | 2026-11-19 14:41 +05:30 | P0: 5039c4e; P1: f464bb3; P2: 673e7f0; P3: pending |
-| 6 Code review | NOT_STARTED | — | — |
-| 7 Verify | NOT_STARTED | — | — |
+| 5 Implementation | APPROVED — P0 (T-01–T-03), P1 (T-04–T-19), P2 (T-20–T-21), and P3 (T-22–T-23) | 2026-11-19 14:41 +05:30 | P0: 5039c4e; P1: f464bb3; P2: 673e7f0; P3: 489964e |
+| 6 Code review | APPROVED — CR-1 Low accepted for now | 2026-11-19 14:49 +05:30 | pending |
+| 7 Verify | IN_PROGRESS | — | — |
 | 8 Pull request | NOT_STARTED | — | — |
 
 ## Decisions (human answers)
@@ -48,6 +48,9 @@ Current stage: 5 Implementation (P3)   Status: APPROVED
 - [5 Implementation P3] Implementer revision: Replace saved tasks is hidden/disabled except while blocked after an unreadable initial load; handler is guarded against clearing readable in-memory tasks; success via reread or confirmed replacement disables it. Regression tests cover readable data and blocked recovery. Preserve confirmation flow and exact feedback.
 - [5 Implementation P3] T-22/T-23 marked Done by implementer after README, CHANGELOG, and traceability documentation existed. No commit made; G5 P3 is pending.
 - [5 Implementation P3] Human approved G5 P3 and directed committing only README, CHANGELOG, the recovery-control fix and focused P2 tests, implementation plan, traceability, and state. No amend, no `.sdlc/logs/`, no push or PR.
+- [5 Implementation P3] Committed approved P3 deliverables and focused recovery-control fix/tests as `489964e` (`feat(todo): document task app and restrict recovery control`) with the required Copilot co-author trailer; `.sdlc/logs/` excluded.
+- [6 Code review] Code reviewer returned Approve with notes; no Blocker/High findings, one Low finding CR-1 remains open. `npm audit` could not assess dependencies because no lockfile exists and package.json declares none. G6 awaits human decision; stop before Stage 7.
+- [6 Code review] Human approved G6, accepting Low finding CR-1 for now; commit only `docs/code-review.md`, Stage 6 traceability, and state updates. No amend, `.sdlc/logs/`, or unrelated changes.
 
 ## Assumptions accepted
 - [4 Implementation planning] Human accepted the unresolved architecture semantic-mapping risks (FR-3, FR-4, FR-7, FR-8, NFR-1, NFR-6 discrepancies between §§4 and 12; NFR-7 “Testing Strategy” not defined as a component in §§3–4). Implement using approved coverage in §12 / `docs/traceability.md`; do not reconcile the upstream mappings silently.
@@ -81,4 +84,6 @@ Current stage: 5 Implementation (P3)   Status: APPROVED
 - [5 Implementation P3] README/CHANGELOG authored; `npm test` passed (26 tests), README local links resolved, and `python -m http.server 8000 --directory src` served the HTML and JS module in validation. Awaiting human clarification on the replacement-control risk before proceeding.
 - [5 Implementation P3] Initial stage-scope docs-sync: 3 fixes applied (README warning, CHANGELOG entry, traceability); 3 accepted semantic conflicts retained. Final stage-scope docs-sync after T-22/T-23 statuses: 1 traceability fix; same 3 semantic conflicts retained; no Not Found or open questions.
 - [5 Implementation P3] Final verification: `npm test` — 27 passed, 0 failed (Microsoft Edge browser acceptance included); `git diff --check` passed. README launch command `python -m http.server 8000 --directory src` served `/` and `/app.js` (200, `text/javascript`); Node v24.22.0 used. No code/doc commit pending G5 approval.
-- [5 Implementation P3] Human approved G5 P3; preparing the scoped conventional commit. `.sdlc/logs/` excluded.
+- [5 Implementation P3] Human approved G5 P3; committed scoped P3 deliverables and recovery-control changes as `489964e`. `.sdlc/logs/` excluded.
+- [6 Code review] Stage-scope docs-sync: in sync; 4 traceability fixes across two passes; 0 unresolved semantic conflicts. Reconciled traceability's state status to WAITING_FOR_HUMAN; no unrelated files or source changes.
+- [6 Code review] G6 approved by human; CR-1 Low accepted for now. Stage 6 artifacts committed with required Copilot co-author trailer.

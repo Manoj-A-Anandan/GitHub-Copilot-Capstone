@@ -4,16 +4,25 @@ Source: [requirements.md](requirements.md) (v3, approved)<br>
 Architecture: [architecture.md](architecture.md) (v3, approved)<br>
 Design review: [design-review.md](design-review.md) (Round 2, approved)<br>
 Plan: [impl-plan.md](impl-plan.md) (23 tasks; P0 T-01–T-03 Done; P1 T-04–T-19 Done; P2 T-20–T-21 Done; P3 T-22–T-23 Done)<br>
-State: [`.sdlc/state.md`](../.sdlc/state.md) (Stage 5 Implementation, P3, IN_PROGRESS)<br>
+State: [`.sdlc/state.md`](../.sdlc/state.md) (Stage 6 Code review, WAITING_FOR_HUMAN)<br>
+Code review: [code-review.md](code-review.md) (Stage 6, Approve with notes; CR-1 open)<br>
 Upstream: [`user-story/_extracted.md`](../user-story/_extracted.md) (source: [`user-story-create-todo-task.md`](../user-story-create-todo-task.md))
 
 ## Stage 5 evidence
 
 - Full command: `npm test` — 27 tests passed, 0 failed. The browser acceptance test ran with installed Microsoft Edge (`msedge.exe`).
 - P2-specific command: `node --test tests/p2-storage-fault-matrix.test.js tests/p2-browser-acceptance.test.js` — passed within the full suite.
-- `git diff --check` passed.
+- Repository `git diff --check` passed. The code-review range `main...HEAD` (`efe7d8e15dae2a4d8c8dd9261941312806967ce0`...`489964ef260da70e81e922e5cc15cd9aeffea36a`) reports CR-1: trailing whitespace on `docs/impl-plan.md:3`.
 - P0 T-01–T-03, P1 T-04–T-19, P2 T-20–T-21, and P3 T-22–T-23 are recorded Done.
 - P3 deliverables: [`README.md`](../README.md) and [`CHANGELOG.md`](../CHANGELOG.md) describe the delivered create-task behavior and recovery scope.
+
+## Stage 6 evidence
+
+- Code review scope: `main...HEAD` (`efe7d8e15dae2a4d8c8dd9261941312806967ce0`...`489964ef260da70e81e922e5cc15cd9aeffea36a`).
+- Verdict: Approve with notes.
+- Requirement-to-code-to-test trace: FR-1–FR-10 and NFR-1–NFR-8 are recorded as Pass in [`code-review.md`](code-review.md).
+- Review finding CR-1 is Low/Code clarity and remains Open: trailing whitespace in `docs/impl-plan.md:3` prevents `git diff --check main...HEAD` from passing.
+- Dependency audit, standalone lint, and standalone type-check limitations are recorded in the code review; no dependency or source changes are required for this docs sync.
 
 The human decision is implemented consistently: **Replace saved tasks** is available only while `StorageRecoveryState.isBlocked()` is true after an unreadable initial load. It is hidden and disabled for readable data, after successful reread, and after confirmed replacement.
 
