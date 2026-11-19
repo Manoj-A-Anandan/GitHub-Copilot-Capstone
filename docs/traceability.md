@@ -4,7 +4,7 @@ Source: [requirements.md](requirements.md) (v3, approved)<br>
 Architecture: [architecture.md](architecture.md) (v3, approved)<br>
 Design review: [design-review.md](design-review.md) (Round 2, approved)<br>
 Plan: [impl-plan.md](impl-plan.md) (23 tasks; P0 T-01–T-03 Done; P1 T-04–T-19 Done; P2 T-20–T-21 Done; P3 T-22–T-23 Done)<br>
-State: [`.sdlc/state.md`](../.sdlc/state.md) (Stage 6 Code review, WAITING_FOR_HUMAN)<br>
+State: [`.sdlc/state.md`](../.sdlc/state.md) (Stage 7 Verify, IN_PROGRESS)<br>
 Code review: [code-review.md](code-review.md) (Stage 6, Approve with notes; CR-1 open)<br>
 Upstream: [`user-story/_extracted.md`](../user-story/_extracted.md) (source: [`user-story-create-todo-task.md`](../user-story-create-todo-task.md))
 
@@ -15,6 +15,16 @@ Upstream: [`user-story/_extracted.md`](../user-story/_extracted.md) (source: [`u
 - Repository `git diff --check` passed. The code-review range `main...HEAD` (`efe7d8e15dae2a4d8c8dd9261941312806967ce0`...`489964ef260da70e81e922e5cc15cd9aeffea36a`) reports CR-1: trailing whitespace on `docs/impl-plan.md:3`.
 - P0 T-01–T-03, P1 T-04–T-19, P2 T-20–T-21, and P3 T-22–T-23 are recorded Done.
 - P3 deliverables: [`README.md`](../README.md) and [`CHANGELOG.md`](../CHANGELOG.md) describe the delivered create-task behavior and recovery scope.
+
+## Stage 7 verification evidence
+
+- Verification report: [`docs/verification-report.md`](verification-report.md), dated 2026-11-19, status PASS.
+- Full command: `npm test` — 30 tests passed, 0 failed, 0 skipped; duration 6565 ms.
+- Coverage command: `npm test -- --experimental-test-coverage` — 30 tests passed; 96.61% line, 84.21% branch, and 90.38% function coverage.
+- Repository check: `git diff --check` passed with no whitespace errors.
+- Gap check: [`tests/verification-gaps.test.js`](../tests/verification-gaps.test.js) passed in the full suite and confirms absent files are safe, no lookup/API/`Not Found` behavior is present, and README/CHANGELOG contain no secret-like or absolute-path data.
+- Browser acceptance: [`tests/p2-browser-acceptance.test.js`](../tests/p2-browser-acceptance.test.js) passed under installed Microsoft Edge at 320 px and 1280 px viewports; script-like text was rendered safely and refresh restoration passed.
+- Dependency audit limitation: `npm audit --json` was attempted but returned `ENOLOCK` because no lockfile exists. [`package.json`](../package.json) declares no runtime or development dependencies/devDependencies, so the dependency ecosystem could not be assessed.
 
 ## Stage 6 evidence
 
@@ -46,7 +56,7 @@ Task mappings below are transcribed from the implementation plan's `Covers` fiel
 | NFR-4 | Task Page UI; Responsive Layout | T-16, T-17, T-19, T-21, T-22, T-23 | [`src/index.html`](../src/index.html), [`src/styles.css`](../src/styles.css) | [`tests/task-page.test.js`](../tests/task-page.test.js), [`tests/integrated-flow.test.js`](../tests/integrated-flow.test.js), [`tests/p2-browser-acceptance.test.js`](../tests/p2-browser-acceptance.test.js) | Done; 320 px and 1280 px verified |
 | NFR-5 | Local Storage Adapter; In-Memory Task State | T-06, T-07, T-08, T-09, T-18, T-19, T-20, T-21, T-23 | [`src/storage-adapter.js`](../src/storage-adapter.js), [`src/task-state.js`](../src/task-state.js), [`src/app.js`](../src/app.js) | [`tests/storage-adapter.test.js`](../tests/storage-adapter.test.js), [`tests/integrated-flow.test.js`](../tests/integrated-flow.test.js), [`tests/p2-storage-fault-matrix.test.js`](../tests/p2-storage-fault-matrix.test.js), [`tests/p2-browser-acceptance.test.js`](../tests/p2-browser-acceptance.test.js) | Done; one-refresh restoration verified |
 | NFR-6 | Local Storage Adapter; Storage Recovery State; Task Creation Controller; In-Memory Task State; Feedback Display | T-02, T-04, T-06, T-08, T-09, T-10, T-11, T-12, T-13, T-16, T-17, T-18, T-20, T-22, T-23 | [`src/storage-adapter.js`](../src/storage-adapter.js), [`src/storage-recovery.js`](../src/storage-recovery.js), [`src/task-creation-controller.js`](../src/task-creation-controller.js), [`src/task-state.js`](../src/task-state.js), [`src/app.js`](../src/app.js), [`tests/fixtures/browser-fixtures.js`](../tests/fixtures/browser-fixtures.js) | [`tests/storage-adapter.test.js`](../tests/storage-adapter.test.js), [`tests/storage-recovery.test.js`](../tests/storage-recovery.test.js), [`tests/task-creation-controller.test.js`](../tests/task-creation-controller.test.js), [`tests/integrated-flow.test.js`](../tests/integrated-flow.test.js), [`tests/p2-storage-fault-matrix.test.js`](../tests/p2-storage-fault-matrix.test.js) | Done; recovery and atomic failure verified |
-| NFR-7 | Testing Strategy; Task Creation Controller; Title Validator; Storage Recovery State; Local Storage Adapter; Task List Renderer | T-01, T-02, T-05, T-07, T-09, T-11, T-13, T-15, T-17, T-18, T-19, T-20, T-21, T-22, T-23 | [`package.json`](../package.json), [`src/task-state.js`](../src/task-state.js), [`src/storage-adapter.js`](../src/storage-adapter.js), [`src/storage-recovery.js`](../src/storage-recovery.js), [`src/task-creation-controller.js`](../src/task-creation-controller.js), [`src/task-list-renderer.js`](../src/task-list-renderer.js), [`src/app.js`](../src/app.js) | All P0–P2 test sources in this matrix plus P3 docs | Done; 27 tests pass |
+| NFR-7 | Testing Strategy; Task Creation Controller; Title Validator; Storage Recovery State; Local Storage Adapter; Task List Renderer | T-01, T-02, T-05, T-07, T-09, T-11, T-13, T-15, T-17, T-18, T-19, T-20, T-21, T-22, T-23 | [`package.json`](../package.json), [`src/task-state.js`](../src/task-state.js), [`src/storage-adapter.js`](../src/storage-adapter.js), [`src/storage-recovery.js`](../src/storage-recovery.js), [`src/task-creation-controller.js`](../src/task-creation-controller.js), [`src/task-list-renderer.js`](../src/task-list-renderer.js), [`src/app.js`](../src/app.js) | All P0–P2 test sources in this matrix, [`tests/verification-gaps.test.js`](../tests/verification-gaps.test.js), plus P3 docs | Done; Stage 7 verification: 30 tests pass, 0 fail, 0 skip |
 | NFR-8 | Browser-only scope; no credentials or external service | T-02, T-03, T-22, T-23 | [`src/app.js`](../src/app.js), [`src/index.html`](../src/index.html), [`src/styles.css`](../src/styles.css), [`package.json`](../package.json), [`.env.example`](../.env.example) | [`tests/security-policy.test.js`](../tests/security-policy.test.js) | Done; no application credentials required |
 
 ## Planned test-task links
