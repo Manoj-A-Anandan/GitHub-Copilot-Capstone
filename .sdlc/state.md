@@ -1,7 +1,7 @@
 # SDLC State
 Story: Create a TODO Task (user-story/_extracted.md; source: user-story-create-todo-task.md)
 Slug: create-todo-task   Branch: feature/create-todo-task
-Current stage: 5 Implementation (P2)   Status: IN_PROGRESS
+Current stage: 5 Implementation (P3)   Status: IN_PROGRESS
 
 ## Stages
 | Stage | Status | Approved at | Commit |
@@ -11,7 +11,7 @@ Current stage: 5 Implementation (P2)   Status: IN_PROGRESS
 | 2 Architecture | APPROVED — Version 3 revision | 2026-11-19 12:31 +05:30 | 58630ef |
 | 3 Design review | APPROVED — Round 2 | 2026-11-19 12:31 +05:30 | 58630ef |
 | 4 Implementation planning | APPROVED | 2026-11-19 13:22 +05:30 | e1ffd4e |
-| 5 Implementation | APPROVED — P0 (T-01–T-03) and P1 (T-04–T-19); IN_PROGRESS — P2 (T-20–T-21) | 2026-11-19 13:42 +05:30 | P0: 5039c4e; P1 commit ID pending |
+| 5 Implementation | APPROVED — P0 (T-01–T-03), P1 (T-04–T-19), and P2 (T-20–T-21); IN_PROGRESS — P3 (T-22–T-23) | 2026-11-19 14:20 +05:30 | P0: 5039c4e; P1: f464bb3; P2: pending |
 | 6 Code review | NOT_STARTED | — | — |
 | 7 Verify | NOT_STARTED | — | — |
 | 8 Pull request | NOT_STARTED | — | — |
@@ -41,6 +41,8 @@ Current stage: 5 Implementation (P2)   Status: IN_PROGRESS
 - [5 Implementation P1] Human requested a narrow P1 correction for a throwing `window.localStorage` getter before G5; preserve injection, route getter failure through adapter unreadable handling, show the exact approved message, block writes, and add a focused regression test. Do not start P2 or change accepted architecture mapping risks.
 - [5 Implementation P1] Correction completed; full P1 suite rerun passed (14 tests, 0 failures); G5 P1 awaits human approval. No commit.
 - [5 Implementation P1] Human approved G5 P1 and directed continuation through planned priority groups; commit P1 T-04–T-19 before starting P2, then retain the G5 approval gate after P2 and stop before P3.
+- [5 Implementation P1] G5 P1 approval recorded and implementation/tests committed as `f464bb3` (`feat(todo): implement task creation flow`); required Copilot co-author trailer included.
+- [5 Implementation P2] Human approved G5 P2 and directed completion of P3 T-22/T-23, retaining the G5 P3 gate before code review. Commit only the P2 tests and necessary plan/traceability/state updates; no amend, no `.sdlc/logs/`, no push or PR.
 
 ## Assumptions accepted
 - [4 Implementation planning] Human accepted the unresolved architecture semantic-mapping risks (FR-3, FR-4, FR-7, FR-8, NFR-1, NFR-6 discrepancies between §§4 and 12; NFR-7 “Testing Strategy” not defined as a component in §§3–4). Implement using approved coverage in §12 / `docs/traceability.md`; do not reconcile the upstream mappings silently.
@@ -68,3 +70,6 @@ Current stage: 5 Implementation (P2)   Status: IN_PROGRESS
 - [5 Implementation P1 correction] Full P1 test rerun with throwing-getter regression: `node --test tests/title-validator.test.js tests/task-state.test.js tests/storage-adapter.test.js tests/storage-recovery.test.js tests/task-creation-controller.test.js tests/safe-renderer.test.js tests/task-page.test.js tests/integrated-flow.test.js` — 14 passed, 0 failed; `git diff --check` passed.
 - [5 Implementation P1 correction] Stage-scope docs-sync: 4 fixes applied; 3 accepted semantic conflicts retained; no blocking questions. Updated traceability records the added regression and 14-test result.
 - [5 Implementation P1] Human approved G5 P1; P1 commit in progress.
+- [5 Implementation P2] Tests: `node --test --test-timeout=20000 tests/p2-storage-fault-matrix.test.js tests/p2-browser-acceptance.test.js` — 5 passed, 0 failed; real-browser acceptance ran in installed Microsoft Edge. Full `npm test` — 26 passed, 0 failed; `git diff --check` passed.
+- [5 Implementation P2] Stage-scope docs-sync: 1 fix applied; 3 accepted semantic conflicts retained; no blocking questions. P2 traceability updated for T-20/T-21 and test results.
+- [5 Implementation P2] Human approved G5; P2 commit in progress.
