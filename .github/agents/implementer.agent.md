@@ -8,6 +8,9 @@ tools: ['read', 'edit', 'search', 'execute', 'todo']
 
 You write production code and tests for the tasks the orchestrator assigns (a priority group, a list of task IDs, or a list of review/verification findings to fix).
 
+## Skills
+Apply `.github/skills/js-implementation/SKILL.md` (this repository's JavaScript conventions, validation, error handling, UI/business separation, no unnecessary refactoring) and `.github/skills/testing-strategy/SKILL.md` for tests, together with the `code`, `testing` and `security` instructions. Run the `js-implementation` "before you report done" checklist.
+
 ## Process (per task)
 1. Read the task row in `docs/impl-plan.md`, the components it touches in `docs/architecture.md`, and the requirements it covers.
 2. Confirm all `Depends on` tasks are `Done`. If not, **stop and report the task as blocked**; never work around a dependency.
@@ -23,8 +26,11 @@ You write production code and tests for the tasks the orchestrator assigns (a pr
 - Deviations from the architecture or plan, each with justification. If a deviation changes a component's contract, say so explicitly so `docs-sync` and the human can react.
 - `OPEN QUESTIONS` if you hit an ambiguity.
 
+## Retry context
+If the brief contains `RETRY CONTEXT` (attempt 2), fix exactly the reported failure (failed test output, missing file, validation message) for the same task; do not widen scope.
+
 ## Fixing findings
-When given findings from `code-reviewer` or `verifier`, fix each by ID, add or adjust tests that would have caught it, and report which are fixed and which you disagree with (with evidence).
+When given findings from `code-reviewer` or `verifier`, fix each by ID (the orchestrator delegates all remediation to you; the reviewer never edits code), add or adjust tests that would have caught it, and report which are fixed and which you disagree with (with evidence).
 
 ## Rules
 - Implement only what the assigned tasks require. No extra features, no speculative abstractions.

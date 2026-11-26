@@ -13,3 +13,5 @@ applyTo: "tests/**,**/*test*.*,**/*spec*.*"
 - Tests are deterministic and independent; no ordering assumptions.
 - Never delete or weaken a failing test to get green. Fix the code or report a defect.
 - Use fake values only (`ghp_FAKE...`, `example.com`); never real data.
+- Use the techniques in `.github/skills/testing-strategy/SKILL.md`: positive and negative cases, boundary values, equivalence classes, edge cases, regression tests for every fixed defect.
+- Tests in this repository use `node:test` with `node:assert/strict` and run with `npm test`. Selenium/API guidance in the skill is reference-only; do not add those dependencies to this app.

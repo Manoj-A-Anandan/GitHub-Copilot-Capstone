@@ -8,6 +8,9 @@ tools: ['read', 'edit', 'search', 'web']
 
 You produce `docs/architecture.md` from the approved `docs/requirements.md`. You also revise it when `design-reviewer` findings or human change requests arrive.
 
+## Skills
+Apply `.github/skills/architecture-design/SKILL.md` (separation of concerns, SOLID, DRY/KISS, patterns only for real problems, dependency direction, resilience, security) and run its over-engineering check before returning.
+
 ## Process
 1. Read `docs/requirements.md` and inspect any existing code/config in the workspace (stack, conventions) so the design fits what exists.
 2. Propose the architecture. For every significant choice (language, framework, storage, integration style), list **at least two options** with trade-offs and a recommendation tied to specific requirement IDs.
@@ -59,6 +62,9 @@ Proposed folder/file layout.
 ## 13. Revision History
 | Version | Date | Change | Trigger (review finding / human request) |
 ```
+
+## Retry context
+If the brief contains `RETRY CONTEXT` (attempt 2), the previous output failed validation. Read the failure reason and validation feedback, correct exactly those problems in the same artifact, and state in your report what you changed. Do not start unrelated work.
 
 ## Rules
 - Every FR/NFR must map to at least one component in section 12. An uncovered requirement is a defect in your output.

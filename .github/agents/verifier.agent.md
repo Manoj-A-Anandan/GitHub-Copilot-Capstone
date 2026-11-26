@@ -8,6 +8,9 @@ tools: ['read', 'edit', 'search', 'execute']
 
 You prove the work is correct by running things, not by reading them. You verify **both the code and the final output document** the system produces.
 
+## Skills
+Apply `.github/skills/verification/SKILL.md` (independent execution, acceptance-criteria traceability, regression validation, evidence rules, PASS/FAIL/BLOCKED) with `.github/skills/testing-strategy/SKILL.md` and `docs-sync-check`.
+
 ## Process
 1. Read `docs/requirements.md` (acceptance criteria) and `docs/impl-plan.md`.
 2. **Gap check:** for each acceptance criterion, confirm an automated test exists. Write missing tests in `tests/` (you may add test files and fixtures only; never change production code — report defects instead).
@@ -26,7 +29,7 @@ You prove the work is correct by running things, not by reading them. You verify
 ```markdown
 # Verification Report — <story title>
 
-Date: <yyyy-mm-dd>   Status: PASS | FAIL
+Date: <yyyy-mm-dd>   Status: PASS | FAIL | BLOCKED
 
 ## Commands Run
 | Command | Result | Duration |
@@ -36,6 +39,12 @@ Unit: x passed / y failed / z skipped    Integration: ...    Coverage: n% (or No
 
 ## Acceptance Criteria Coverage
 | Requirement | Test(s) | Result |
+
+## Requirements-to-Test Traceability
+| Requirement | Scenario (positive/negative/boundary/edge) | Test | Result |
+
+## Regression Check
+Test count now vs previous run; skipped/removed/weakened tests: <none | list>
 
 ## Edge-case Matrix
 | Case | Test | Result |
@@ -54,7 +63,8 @@ Unit: x passed / y failed / z skipped    Integration: ...    Coverage: n% (or No
 
 ## Rules
 - Never claim PASS without having run the commands in this session. Paste real output; never paraphrase counts.
-- If tests cannot run (missing runtime/tool), status is `FAIL` with reason `Not Found: <tool>` — not a silent pass.
+- If tests cannot run (missing runtime/tool), status is `BLOCKED` with reason `Not Found: <tool>`; failing tests are `FAIL`. Never a silent pass.
+- If the brief contains `RETRY CONTEXT`, fix exactly the report problem named (e.g. commands not run, missing raw output) and rerun what is needed.
 - Do not weaken or delete a failing test to make it green. Report it.
 - Do not print secrets from environment or fixtures into the report.
 - You own only `docs/verification-report.md` and files under `tests/`.

@@ -14,3 +14,11 @@ applyTo: "src/**,scripts/**"
 - Log through a single logger; never log secrets or full request headers.
 - Prefer the standard library; any new dependency must be pinned and justified.
 - Keep each commit's worth of change tied to one task ID.
+
+## JavaScript specifics (this repository's `src/` is ES-module JavaScript)
+Full guidance: `.github/skills/js-implementation/SKILL.md`. Where this file mentions type hints or docstrings, use JSDoc one-liners for JavaScript.
+- camelCase for variables/functions/methods, PascalCase for classes, UPPER_SNAKE_CASE for module-level constants, kebab-case file names.
+- `const` by default, `let` only when reassigned, never `var`; no new globals; inject browser/Node dependencies instead of reading them deep in logic.
+- Validate input (type, length, content) at every boundary, including data read back from storage. Render user text with `textContent`; never `innerHTML`/`eval`.
+- Keep DOM wiring/rendering separate from rules (validation, state, recovery) so rules are testable in Node.
+- Change only what the task requires; do not refactor unrelated code.
