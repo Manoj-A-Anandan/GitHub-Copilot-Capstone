@@ -14,6 +14,9 @@ Documentation is a deliverable, not an afterthought. After every stage the orche
 
 Use the `docs-sync-check` skill for the detailed checklist.
 
+## Retry context
+If the brief contains `RETRY CONTEXT`, fix the reported report/format problem and rerun the checks.
+
 ## What you maintain (you own these)
 - `docs/traceability.md` — matrix: Requirement ID → Architecture component → Plan task(s) → Code file(s) → Test(s) → Status. Rebuild it from the current artifacts each run; never hand-wave a cell (`Not Found` if a link is missing).
 - `README.md` — purpose, setup, configuration (env var names only), usage, project structure, how to run tests, link to `docs/`. Must reflect the code that actually exists.

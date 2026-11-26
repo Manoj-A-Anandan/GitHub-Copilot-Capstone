@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TODO</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <main id="app" aria-labelledby="page-title">
+      <h1 id="page-title">TODO</h1>
+      <form id="task-form">
+        <label for="title">Task title</label>
+        <input id="title" name="title" type="text" autocomplete="off">
+        <button id="add-task" type="submit">Add Task</button>
+      </form>
+      <p id="feedback" role="status" aria-live="polite"></p>
+      <div id="recovery-controls">
+        <button id="reread-tasks" type="button">Reread saved tasks</button>
+        <button id="replace-tasks" type="button">Replace saved tasks</button>
+      </div>
+      <ul id="task-list" aria-label="Tasks"></ul>
+    </main>
+  </body>
+</html>

@@ -9,6 +9,8 @@ applyTo: ".github/agents/**,.github/prompts/**,.sdlc/**"
 - `OPEN QUESTIONS` format: numbered, each with a suggested default. A subagent with blocking questions writes nothing and returns only the questions.
 - Ownership: each artifact has exactly one owning agent (see `.github/copilot-instructions.md`). Others report problems; they do not edit it.
 - Revision requests quote the finding ID or human instruction, and the owner records the change in its revision history.
+- Retry policy: every stage unit gets at most 2 technical attempts (initial + one retry) run by the orchestrator, which passes `RETRY CONTEXT` (attempt, failure reason, validation feedback) to the same subagent and logs each attempt in `.sdlc/retry-log.md`. A subagent receiving `RETRY CONTEXT` fixes only what was reported. Human "Request changes", `OPEN QUESTIONS` and review findings are not technical failures. Details: `sdlc-orchestrator.agent.md`.
+- Subagents never perform external side effects (commit, push, PR, comment) except `pr-creator` in Phase B after gate G8, and only through the idempotent steps defined there.
 - Loops are bounded (3 rounds for clarification and gate revisions, 2 for review/fix cycles). After the bound, escalate to the human.
 - Gate format and approval semantics are defined in `sdlc-orchestrator.agent.md`. Silence is never approval.
 - When editing an agent/prompt file, keep frontmatter valid (`name`, `description`, `tools`) and keep the agent's scope narrow.

@@ -8,6 +8,9 @@ tools: ['read', 'edit', 'search']
 
 You turn the approved `docs/architecture.md` (plus `docs/requirements.md` and `docs/design-review.md`) into `docs/impl-plan.md`.
 
+## Skills
+Apply `.github/skills/architecture-design/SKILL.md` (component boundaries, dependency direction) and the traceability rules of `.github/skills/requirements-analysis/SKILL.md`. Test tasks follow `.github/skills/testing-strategy/SKILL.md`.
+
 ## Process
 1. Read the three upstream documents. Include decisions agreed in the design review.
 2. Create tasks that are small (ideally under ~2 hours of work, one logical commit), independently verifiable, and traceable to FR/NFR IDs and architecture components.
@@ -45,6 +48,9 @@ flowchart TD
 ## 7. Requirement → Task Coverage
 | Requirement | Tasks |
 ```
+
+## Retry context
+If the brief contains `RETRY CONTEXT` (attempt 2), the previous output failed validation. Read the failure reason and validation feedback, correct exactly those problems in the same artifact, and state in your report what you changed. Do not start unrelated work.
 
 ## Rules
 - Order strictly by dependency; the table order is the execution order.
